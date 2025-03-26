@@ -1,5 +1,14 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import { Select } from "radix-ui";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput
+} from "@mui/material";
+import SelectInput, {
+  SelectChangeEvent
+} from "@mui/material/Select/SelectInput";
+import { CaretDown, CaretUp } from "@phosphor-icons/react";
+import Select from "@mui/material/Select";
 import React from "react";
 
 interface FilterSelectProps {
@@ -8,32 +17,26 @@ interface FilterSelectProps {
 }
 
 export default function FilterSelect(props: FilterSelectProps) {
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setAge(event.target.value);
+  };
   return (
-    <Select.Root>
-      <Select.Trigger className=" p-2 rounded-md inline-flex items-center justify-between w-48 border border-gray-300 bg-[#FFF]">
-        <Select.Value placeholder={props.placeholder} />
-        <Select.Icon>
-          <ChevronDownIcon />
-        </Select.Icon>
-      </Select.Trigger>
-      <Select.Content
-        className="bg-white w-48 p-2 rounded-b-md shadow-lg"
-        position="popper"
+    <FormControl fullWidth variant="filled">
+      <InputLabel>{props.placeholder}</InputLabel>
+      <Select
+        value={age}
+        input={<OutlinedInput label={props.placeholder} />}
+        onChange={handleChange}
+        className="bg-white"
       >
-        <Select.ScrollUpButton className="flex h-[25px] cursor-default items-center justify-center bg-white text-violet11">
-          <ChevronUpIcon />
-        </Select.ScrollUpButton>
-        <Select.Viewport>
-          {props.filterList.map((filter) => (
-            <Select.Item key={filter} value={filter} className="p-1">
-              {filter}
-            </Select.Item>
-          ))}
-        </Select.Viewport>
-        <Select.ScrollDownButton className="flex h-[25px] cursor-default items-center justify-center bg-white text-violet11">
-          <ChevronDownIcon />
-        </Select.ScrollDownButton>
-      </Select.Content>
-    </Select.Root>
+        {props.filterList.map((item) => (
+          <MenuItem value={item} key={item} className="w-full">
+            {item}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }

@@ -1,24 +1,60 @@
-import React from "react";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Grid2,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from "@mui/material";
+import { ArrowDown, CalendarDots } from "@phosphor-icons/react";
 import FilterSelect from "./select/FilterSelect";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { IconButton } from "@radix-ui/themes";
 
 export default function Filter() {
-  const categoryList = ["Estudos", "Trabalho", "Lazer", "Outros"];
+  const categoryList = [
+    "Estudos",
+    "Trabalho",
+    "Lazer",
+    "Outros",
+    "Quiropraxia"
+  ];
+  
   const priorityList = ["Alta", "Média", "Baixa"];
   const statusList = ["Pendente", "Concluído"];
 
   return (
     <div>
-      <h1 className="font-bold">Filtros</h1>
-      <div className="flex gap-4 my-2">
-        <FilterSelect placeholder="Categoria" filterList={categoryList} />
-        <FilterSelect placeholder="Prioridade" filterList={priorityList} />
-        <FilterSelect placeholder="Status" filterList={statusList} />
-        <IconButton size="4" color="blue">
-          <CalendarIcon width="30" height="30" />
-        </IconButton>
-      </div>
+      <Accordion elevation={0}>
+        <AccordionSummary expandIcon={<ArrowDown />}>
+          <Typography component="span">Filtros</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Grid2
+            container
+            gap={2}
+            sx={{ justifyContent: "space-around", alignItems: "center" }}
+          >
+            <Grid2 size={{ xs: 12, md: 3, lg: 3, xl: 3 }}>
+              <FilterSelect placeholder="Categoria" filterList={categoryList} />
+            </Grid2>
+            <Grid2 size={{ xs: 12, md: 3, lg: 3, xl: 3 }}>
+              <FilterSelect
+                placeholder="Prioridade"
+                filterList={priorityList}
+              />
+            </Grid2>
+            <Grid2 size={{ xs: 12, md: 3, lg: 3, xl: 3 }}>
+              <FilterSelect placeholder="Status" filterList={statusList} />
+            </Grid2>
+            <Grid2 size={{ xs: 12, md: 1, lg: 1, xl: 1 }}>
+              <IconButton>
+                <CalendarDots />
+              </IconButton>
+            </Grid2>
+          </Grid2>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 }
